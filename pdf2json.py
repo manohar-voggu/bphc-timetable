@@ -97,7 +97,7 @@ for _, row in df.iterrows():
                 courses[-1].sections[-1].hours.extend(hours)
 
 with open('courses.json', 'w') as output:
-    output_json = CoursesEncoder().encode(courses)
+    output_json = CoursesEncoder(indent=4, sort_keys=True).encode(courses)
     output.write(output_json)
     if 'NaN' in output_json:
         raise Exception('"NaN" found in json. Wrote to file anyway. Correct it manually')
