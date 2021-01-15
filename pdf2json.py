@@ -7,19 +7,22 @@ from json import JSONEncoder
 pdf_path = 'timetable.pdf'
 # start and end page numbers in pdf for coursewise timetable
 start_page = 7
-end_page = 53
+end_page = 52
 
-df_list = tabula.read_pdf(pdf_path, pages=[i for i in range(start_page, end_page + 1)], pandas_options={'dtype': 'str'})
+# specify area using coordinates: https://github.com/tabulapdf/tabula-java/wiki/Using-the-command-line-tabula-extractor-tool#grab-coordinates-of-the-table-you-want
+df_list = tabula.read_pdf(pdf_path, pages=[i for i in range(start_page, end_page + 1)], pandas_options={'dtype': 'str'}, area=(121.275,45.54,557.865,742.5))
 df = pd.concat(df_list, ignore_index=True)
-df.columns = [i for i in range(11)]
-df.drop([0, 3, 4, 5, 10], axis=1, inplace=True)
-df.columns = ['course_no', 'course_name','section_no', 'instructor', 'days', 'hours']
+df.columns = [i for i in range(12)]
+df.drop([0, 3, 4, 5], axis=1, inplace=True)
+df.columns = ['course_no', 'course_name','section_no', 'instructor', 'days', 'hours', 'midsem_date','compre_date']
 
 
 class Course:
-    def __init__(self, no, name):
+    def __init__(self, no, name, midsem_date, compre_date):
         self.no = no
         self.name = name
+        self.midsem_date = midsem_date
+        self.compre_date = compre_date
         self.sections = []
 
 
@@ -54,7 +57,7 @@ category_current = "L"
 for _, row in df.iterrows():
     if exists(row['course_no']):  # new course
         category_current = "L"  # reset category to Lecture
-        courses.append(Course(row['course_no'], row['course_name']))
+        courses.append(Course(row['course_no'], row['course_name'], row['midsem_date'], row['compre_date']))
 
         # days & hours may not exist (for study projects etc.)
         days = row['days'].split() if exists(row['days']) else []
