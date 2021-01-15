@@ -61,7 +61,7 @@ for _, row in df.iterrows():
         hours = row['hours'].split() if exists(row['hours']) else []
         # add section to latest course
         courses[-1].sections.append(Section(category_current,
-                                            row['section_no'], row['instructor'], days, hours))
+                                            1 + len(courses[-1].sections), row['instructor'], days, hours))
 
     else:
         # same course
@@ -75,7 +75,7 @@ for _, row in df.iterrows():
             days = row['days'].split() if exists(row['days']) else []
             hours = row['hours'].split() if exists(row['hours']) else []
             courses[-1].sections.append(Section(category_current,
-                                                row['section_no'], row['instructor'], days, hours))
+                                                1 + len(courses[-1].sections), row['instructor'], days, hours))
         else:
             # same category
             if exists(row['section_no']):
@@ -83,7 +83,7 @@ for _, row in df.iterrows():
                 days = row['days'].split() if exists(row['days']) else []
                 hours = row['hours'].split() if exists(row['hours']) else []
                 courses[-1].sections.append(Section(category_current,
-                                                    row['section_no'], row['instructor'], days, hours))
+                                                    1 + len(courses[-1].sections), row['instructor'], days, hours))
             else:
                 # same section
                 days = row['days'].split() if exists(row['days']) else []
