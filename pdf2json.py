@@ -63,34 +63,34 @@ for _, row in df.iterrows():
         courses[-1].sections.append(Section(category_current,
                                             row['section_no'], row['instructor'], days, hours))
 
-else:
-    # same course
-    if exists(row['course_name']):
-        # change category
-        if row['course_name'].lower() == 'tutorial':
-            category_current = "T"
-        if row['course_name'].lower() == 'practical':
-            category_current = "P"
-
-        days = row['days'].split() if exists(row['days']) else []
-        hours = row['hours'].split() if exists(row['hours']) else []
-        courses[-1].sections.append(Section(category_current,
-                                            row['section_no'], row['instructor'], days, hours))
     else:
-        # same category
-        if exists(row['section_no']):
-            # new section
+        # same course
+        if exists(row['course_name']):
+            # change category
+            if row['course_name'].lower() == 'tutorial':
+                category_current = "T"
+            if row['course_name'].lower() == 'practical':
+                category_current = "P"
+
             days = row['days'].split() if exists(row['days']) else []
             hours = row['hours'].split() if exists(row['hours']) else []
             courses[-1].sections.append(Section(category_current,
                                                 row['section_no'], row['instructor'], days, hours))
         else:
-            # same section
-            days = row['days'].split() if exists(row['days']) else []
-            hours = row['hours'].split() if exists(row['hours']) else []
-            courses[-1].sections[-1].incharges.append(row['instructor'])
-            courses[-1].sections[-1].days.extend(days)
-            courses[-1].sections[-1].hours.extend(hours)
+            # same category
+            if exists(row['section_no']):
+                # new section
+                days = row['days'].split() if exists(row['days']) else []
+                hours = row['hours'].split() if exists(row['hours']) else []
+                courses[-1].sections.append(Section(category_current,
+                                                    row['section_no'], row['instructor'], days, hours))
+            else:
+                # same section
+                days = row['days'].split() if exists(row['days']) else []
+                hours = row['hours'].split() if exists(row['hours']) else []
+                courses[-1].sections[-1].incharges.append(row['instructor'])
+                courses[-1].sections[-1].days.extend(days)
+                courses[-1].sections[-1].hours.extend(hours)
 
 with open('courses.json', 'w') as output:
     output_json = CoursesEncoder().encode(courses)
