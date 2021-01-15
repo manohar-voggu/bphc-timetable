@@ -21,8 +21,9 @@ class Course:
     def __init__(self, no, name, midsem_date, compre_date):
         self.no = no
         self.name = name
-        self.midsem_date = midsem_date
-        self.compre_date = compre_date
+        # Midsem and Compre dates may not exist (for study projects etc.)
+        self.midsem_date = midsem_date if exists(midsem_date) else None
+        self.compre_date = compre_date if exists(compre_date) else None
         self.sections = []
 
 
