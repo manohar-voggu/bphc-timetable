@@ -27,8 +27,8 @@ class Section:
     def __init__(self, category, no, instructor, days, hours):
         self.category = category
         self.no = no
-        # list so that more instructor can be added as loop runs
-        self.instructor = [instructor]
+        # list so that more instructors can be added as loop runs
+        self.instructors = [instructor]
         self.days = days
         self.hours = hours
 
@@ -88,7 +88,7 @@ for _, row in df.iterrows():
                 # same section
                 days = row['days'].split() if exists(row['days']) else []
                 hours = row['hours'].split() if exists(row['hours']) else []
-                courses[-1].sections[-1].incharges.append(row['instructor'])
+                courses[-1].sections[-1].instructors.append(row['instructor'])
                 courses[-1].sections[-1].days.extend(days)
                 courses[-1].sections[-1].hours.extend(hours)
 
