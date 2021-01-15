@@ -1,7 +1,7 @@
 # bphc-timetable
 Scripts and static assets related to parsing timetable pdf of bphc
 
-## Instructions
+### Instructions
 * Adjust variables like path/url to pdf, start & end page numbers, area for tabula, columns to parse in `pdf2json.py` <br>
 * `python3 pdf2json.py`
 
