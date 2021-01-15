@@ -3,6 +3,8 @@ Scripts and static assets related to parsing timetable pdf of bphc
 
 ### Instructions
 * Adjust variables like path/url to pdf, start & end page numbers, area for tabula, columns to parse in `pdf2json.py` <br>
+* Ensure you have a Java runtime and set the PATH for it
+* `pip install -r requirements.txt`
 * `python3 pdf2json.py`
 
 ### Note
